@@ -1,0 +1,38 @@
+#!/bin/bash
+# connection.merge — слияние логики и графики
+# Использование: ./connection.merge <имя_проекта>
+
+NAME=$1
+
+if [ -z "$NAME" ]; then
+    echo "Ошибка: не указано имя проекта"
+    exit 1
+fi
+
+BASE="/sdcard/проект javarus"
+TEMP="$BASE/temp"
+
+echo "=== Connection: слияние для $NAME ==="
+
+LOGIC_FLAG="$TEMP/$NAME.logic_ok"
+GRAPHIC_FLAG="$TEMP/$NAME.graphic_ok"
+JAVA_FILE="$TEMP/$NAME.java"
+
+# Проверяем, что оба флага есть
+if [ ! -f "$LOGIC_FLAG" ]; then
+    echo "Ошибка: логика не прошла проверку"
+    exit 1
+fi
+
+if [ ! -f "$GRAPHIC_FLAG" ]; then
+    echo "Ошибка: графика не прошла проверку"
+    exit 1
+fi
+
+# Всё в порядке — создаём флаг слияния
+MERGE_FLAG="$TEMP/$NAME.merge_ok"
+echo "Слияние успешно: $NAME" > "$MERGE_FLAG"
+echo "Флаг слияния создан: $MERGE_FLAG"
+echo "=== Connection завершён ==="
+
+exit 0
